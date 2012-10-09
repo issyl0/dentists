@@ -7,11 +7,8 @@ class DentistDataManipulation
 		@dbConnection = SQLite3::Database.new( "./../db/dentist_book.db" )
 	end
 
-	# Now a separate part of the program that is called from the menu when the
-	# user selects option 1.
 	def add_dentist
 
-		# Tell the user what this part of the program does.
 		print "\t\t\tDentist Addition\n"
 
 		# Initialise variables.
@@ -91,17 +88,15 @@ class DentistDataManipulation
 			end
 		end
 
-		# Make the method return a blank line, then a value, then end it and
-		# loop back to the top.
+		# Return a blank line, then a value, then end it and loop back to
+		# the top.
 		puts
 		puts "Add another dentist.  If you would not like to, press Ctrl+C on your keyboard now."
 		return add_dentist
 
-	# End add_dentist method.	
 	end
 
 	def search_dentist
-		# Search dentists with some much cleaner code!
 		
 		# Get the user's choice of ascending or descending order for the searches.
 		puts "Ascending or descending order?\n
@@ -116,7 +111,6 @@ class DentistDataManipulation
 				4. None, just list all of the dentists.  (Warning: this may take a while and flood your screen with data.)"
 		searchby_choice = gets.chomp.to_i
 
-		# Only one loop to get the order choice.
 		if orderby_choice == 1 then
 			order = "ASC"
 		else
@@ -141,7 +135,6 @@ class DentistDataManipulation
 			exit
 		end
 
-		# The main body of the SQL command.
 		main_sql = "SELECT * FROM dentist"
 		# Now if the user has selected one of the correct numbers...
 		if searchby_choice != 4 then
@@ -182,11 +175,9 @@ class DentistDataManipulation
 	end
 
 	def remove_dentist
-		# Remove a specified dentist.
 		
 		# Certificate number because it is the only totally unique piece of data
-		# visible to the user in the book of dentists.  Not that the user will
-		# want to delete dentists very often - I hope!
+		# visible to the user in the book of dentists.
 		puts "Enter the certificate number of the dentist you wish to delete:
 		Certificate number.\n"
 		user_dent_cert_num = gets.chomp
@@ -203,6 +194,8 @@ class DentistDataManipulation
 	end
 
 	def search_rm_certnum(udcn)
+	  # Search for the certificate number that was supposedly just
+	  # deleted to be sure that the record was deleted.
 		check_certnum_sql = "SELECT * FROM dentist WHERE cert_num = " + udcn + ""
 		puts check_certnum_sql
 		check_sql = @dbConnection.prepare( check_certnum_sql )
