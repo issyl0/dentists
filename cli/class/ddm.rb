@@ -64,7 +64,7 @@ class DentistDataManipulation
 		# this will re-display the main menu...
 		if validatesdentyesno == true then
 			dent_sql = @dbConnection.prepare( "INSERT INTO dentist (forename,surname,address,reg_date,cert_num) VALUES (?,?,?,?,?)" )
-			dent_sql.execute(fname,sname,addr,rd,cn)
+			dent_sql.execute(fname,sname,addr,regdate,certnum)
 			dent_last_pk = @dbConnection.execute( "SELECT last_insert_rowid()" )
 			puts "Dentist information successfully inserted.\n"
 		end
@@ -107,17 +107,17 @@ class DentistDataManipulation
 		puts "Ascending or descending order?\n
 				1. Ascending.\n
 				2. Descending."
-		orderby_choice = gets.chomp
+		orderby_choice = gets.chomp.to_i
 
 		puts "What field would you like to use to search dentists?\n
 				1. Surname.\n
 				2. Certificate number.\n
 				3. Registration date.\n
 				4. None, just list all of the dentists.  (Warning: this may take a while and flood your screen with data.)"
-		searchby_choice = gets.chomp
+		searchby_choice = gets.chomp.to_i
 
 		# Only one loop to get the order choice.
-		if orderby_choice == "1" then
+		if orderby_choice == 1 then
 			order = "ASC"
 		else
 			order = "DESC"
@@ -125,16 +125,16 @@ class DentistDataManipulation
 
 		# Give the column name to the 'col' variable in order for it just to be
 		# added to the SQL string and not clog up every section of the if.
-		if searchby_choice.to_i == 1
+		if searchby_choice == 1
 			puts "Enter a name to search for: "
 			col = "surname"
-		elsif searchby_choice.to_i == 2
+		elsif searchby_choice == 2
 			puts "Enter a certificate number to search for: "
 			col = "cert_num"
-		elsif searchby_choice.to_i == 3
+		elsif searchby_choice == 3
 			puts "Enter a registration date to search for, in the format yyyy-mm-dd: "
 			col = "reg_date"
-		elsif searchby_choice.to_i == 4
+		elsif searchby_choice == 4
 			puts "Searching for everything..."
 		else
 			puts "User error."
