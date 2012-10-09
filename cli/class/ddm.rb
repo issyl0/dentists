@@ -4,7 +4,7 @@ class DentistDataManipulation
 	# Now initialise the database connection.
 	def initialize
 		# Define the database connection to the dentist_book.db SQLite database.
-		@dbConnection = SQLite3::Database.new( "../db/dentist_book.db" )
+		@dbConnection = SQLite3::Database.new( "./../db/dentist_book.db" )
 	end
 
 	# Now a separate part of the program that is called from the menu when the
@@ -150,7 +150,6 @@ class DentistDataManipulation
 			# Now make the last bits of the SQL command with all the variables.
 			cond_sql = " WHERE " + col + " = " + search + " ORDER BY " + col + " " + order + ""
 		else
-		  # Just order by ASC or DESC.
 		  cond_sql = " ORDER BY surname " + order + ""
 		end
 
@@ -166,7 +165,7 @@ class DentistDataManipulation
 
 	end
 		
-	def check_output_search_results(output, search_sql, searched)
+	def check_output_search_results(output, search_sql, search)
 
 		# This method saves lines of repeating code as it is called during every
 		# if and elsif in search_dentist.  This checks that the data is valid, i.e.
