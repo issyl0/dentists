@@ -86,7 +86,7 @@ class DentistDataManipulation
 				# insertion) to dqid, to satisfy the foreign key of the qualifications
 				# table.
 				dqid = dent_last_pk
-				qual_sql.execute(dqid,qn,qy)
+				qual_sql.execute(dqid,qualname,qualyear)
 				puts "Dentist qualification information successfully inserted."
 			end
 		end
@@ -144,12 +144,14 @@ class DentistDataManipulation
 		# The main body of the SQL command.
 		main_sql = "SELECT * FROM dentist"
 		# Now if the user has selected one of the correct numbers...
-		if col != "" then
+		if col != "4" then
 			# Get the user's chosen input.
 			search = gets.chomp
 			# Now make the last bits of the SQL command with all the variables.
-			# Hopefully the interpolation will work OK.
-			cond_sql = " WHERE #{col}  = #{search} ORDER BY #{col} #{order}"
+			cond_sql = " WHERE " + col + " = '" + search + "' ORDER BY '" + col + '" "' + order + "'"
+		else
+		  # Just order by ASC or DESC.
+		  cond_sql = " ORDER BY #{order}"
 		end
 
 		# Add the two SQL statements together to make the full one.
@@ -196,7 +198,7 @@ class DentistDataManipulation
 		
 		puts sql_cmd
 		remove_sql = @dbConnection.prepare( sql_cmd )
-		remove_sql.execute() # In contrast to 'op' which was output, this one is data input but removal, hence 'inprm'.
+		remove_sql.execute()
 		puts "Dentist " + user_dent_cert_num + " deleted.  Searching for the certificate number to be sure..."
 		search_rm_certnum(user_dent_cert_num)
 	end

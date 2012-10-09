@@ -8,7 +8,7 @@ puts "3. Remove a dentist."
 puts "4. Quit."
 
 # Pull in the DentistDataManipulation class.
-require 'class/ddm.rb'
+require './class/ddm'
 dentists = DentistDataManipulation.new
 
 # Validate the user's menu choice by getting the input string and stripping
