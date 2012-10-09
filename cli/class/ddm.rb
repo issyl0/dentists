@@ -134,7 +134,7 @@ class DentistDataManipulation
 		elsif searchby_choice.to_i == 3
 			puts "Enter a registration date to search for, in the format yyyy-mm-dd: "
 			col = "reg_date"
-		elsif searchby_choice == "4"
+		elsif searchby_choice.to_i == 4
 			puts "Searching for everything..."
 		else
 			puts "User error."
@@ -144,7 +144,7 @@ class DentistDataManipulation
 		# The main body of the SQL command.
 		main_sql = "SELECT * FROM dentist"
 		# Now if the user has selected one of the correct numbers...
-		if searchby_choice.to_i != 4 then
+		if searchby_choice != 4 then
 			# Get the user's chosen input.
 			search = gets.chomp
 			# Now make the last bits of the SQL command with all the variables.
