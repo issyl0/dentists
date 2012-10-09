@@ -125,13 +125,13 @@ class DentistDataManipulation
 
 		# Give the column name to the 'col' variable in order for it just to be
 		# added to the SQL string and not clog up every section of the if.
-		if searchby_choice == "1"
+		if searchby_choice.to_i == 1
 			puts "Enter a name to search for: "
 			col = "surname"
-		elsif searchby_choice == "2"
+		elsif searchby_choice.to_i == 2
 			puts "Enter a certificate number to search for: "
 			col = "cert_num"
-		elsif searchby_choice == "3"
+		elsif searchby_choice.to_i == 3
 			puts "Enter a registration date to search for, in the format yyyy-mm-dd: "
 			col = "reg_date"
 		elsif searchby_choice == "4"
@@ -144,14 +144,14 @@ class DentistDataManipulation
 		# The main body of the SQL command.
 		main_sql = "SELECT * FROM dentist"
 		# Now if the user has selected one of the correct numbers...
-		if col != "4" then
+		if searchby_choice.to_i != 4 then
 			# Get the user's chosen input.
 			search = gets.chomp
 			# Now make the last bits of the SQL command with all the variables.
-			cond_sql = " WHERE " + col + " = '" + search + "' ORDER BY '" + col + '" "' + order + "'"
+			cond_sql = " WHERE " + col + " = " + search + " ORDER BY " + col + " " + order + ""
 		else
 		  # Just order by ASC or DESC.
-		  cond_sql = " ORDER BY #{order}"
+		  cond_sql = " ORDER BY surname " + order + ""
 		end
 
 		# Add the two SQL statements together to make the full one.
