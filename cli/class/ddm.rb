@@ -4,8 +4,7 @@ class DentistDataManipulation
 	# Now initialise the database connection.
 	def initialize
 		# Define the database connection to the dentist_book.db SQLite database.
-		# This one works when I'm on saiph.  For light, replace /home/ with /Users/.
-		@dbConnection = SQLite3::Database.new( "db/dentist_book.db" )
+		@dbConnection = SQLite3::Database.new( "../db/dentist_book.db" )
 	end
 
 	# Now a separate part of the program that is called from the menu when the
@@ -19,16 +18,16 @@ class DentistDataManipulation
 		fname = "" # Forename.
 		sname = "" # Surname.
 		addr = ""  # Address.
-		rd = ""    # Registration date.
-		cn = 0     # Certificate number.
-		qn = ""    # Qualification name.
-		qy = 0     # Qualification year.
+		regdate = ""    # Registration date.
+		certnum = 0     # Certificate number.
+		qualname = ""    # Qualification name.
+		qualyear = 0     # Qualification year.
 		dqid = 0   # Dentist ID foreign key in the qualifications table value.
 
 		# Now assign them the user's input, stripping the new line from the
 		# end.
 		print "Certificate Number: "
-		cn = gets.chomp
+		certnum = gets.chomp
 		print "Surname: "
 		sname = gets.chomp
 		print "Forename: "
@@ -36,24 +35,24 @@ class DentistDataManipulation
 		print "Address: "
 		addr = gets.chomp
 		print "Registration Date (yyyy-mm-dd): "
-		rd = gets.chomp
+		regdate = gets.chomp
 
 		# Validation.
-		if cn == 0 then
+		if certnum == 0 then
 			print "Enter a certificate number.\n"
 		end
-		if sname == "" or fname == "" or addr == "" or rd == "" then
+		if sname == "" or fname == "" or addr == "" or regdate == "" then
 			print "Enter something for all of the values!\n"
 			print "Resetting values... please start again...\n"
 		# Some redundant lines of code because there are no loops yet to take
 		# the user back to the entering section - the program just ends.  :-(
-			cn = ""
+			certnum = ""
 			sname = ""
 			fname = ""
 			addr = ""
-			rd = ""
+			regdate = ""
 		else
-			print "Yay, you didn't leave any boxes blank.  "
+			print "Woo, you didn't leave any boxes blank.  "
 			# There was more validation here that set this value to true, but it
 			# didn't work, so it's implicitly set to true if the user hasn't left
 			# any boxes blank.  NEEDS FIXING.
@@ -76,12 +75,12 @@ class DentistDataManipulation
 		# qualification insertion. 
 		puts "Now enter the dentist's qualifications.  Type 'FINISH' when there are no more to add."
 		# Until the user types FINISH into the Qualification Name box, carry on looping.
-		until qn == "FINISH"
+		until qualname == "FINISH"
 			puts "Qualification name: "
-			qn = gets.chomp
-			if qn != "FINISH" then
+			qualname = gets.chomp
+			if qualname != "FINISH" then
 				puts "Qualification year: "
-				qy = gets.chomp
+				qualyear = gets.chomp
 				qual_sql = @dbConnection.prepare( "INSERT INTO qualification (id,name,year) VALUES (?,?,?)" )
 				# Assign the value of the current database primary key (for this
 				# insertion) to dqid, to satisfy the foreign key of the qualifications
@@ -149,7 +148,8 @@ class DentistDataManipulation
 			# Get the user's chosen input.
 			search = gets.chomp
 			# Now make the last bits of the SQL command with all the variables.
-			cond_sql = " WHERE " + col + " = '" + search + "' ORDER BY " + col + " " + order + ""
+			# Hopefully the interpolation will work OK.
+			cond_sql = " WHERE #{col}  = #{search} ORDER BY #{col} #{order}"
 		end
 
 		# Add the two SQL statements together to make the full one.
@@ -159,12 +159,12 @@ class DentistDataManipulation
 
 		# Now get all the values from the database, and output them.
 		search_sql = @dbConnection.prepare( sql_cmd )
-		op = search_sql.execute() # Variable 'op' = output.
-		check_output_search_results(op, search_sql, search)
+		output = search_sql.execute()
+		check_output_search_results(output, search_sql, search)
 
 	end
 		
-	def check_output_search_results(op, search_sql, searched)
+	def check_output_search_results(output, search_sql, searched)
 
 		# This method saves lines of repeating code as it is called during every
 		# if and elsif in search_dentist.  This checks that the data is valid, i.e.
@@ -172,10 +172,10 @@ class DentistDataManipulation
 		# Must make this prettier.
 
 		puts "Searching..."	
-		checkdata = op.next()
+		checkdata = output.next()
 		while checkdata != ""
 			puts checkdata
-			checkdata = op.next()
+			checkdata = output.next()
 		end
 		puts "... ended!"
 	end
@@ -214,5 +214,4 @@ class DentistDataManipulation
 			puts "Try the removal again."
 		end
 	end
-# End DentistDataManipulation class. 
 end
