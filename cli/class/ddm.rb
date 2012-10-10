@@ -66,7 +66,6 @@ class DentistDataManipulation
 			puts "Dentist information successfully inserted.\n"
 		end
 
-
 		# Some validation so that the user can say stop when he/she has entered
 		# all the qualifications for a particular dentist.  Also, the
 		# qualification insertion. 
