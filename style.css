@@ -1,5 +1,6 @@
 html {
-  font-family: sans-serif;
+  font-family: "Lucida Sans", sans-serif;
+  background-color: #171717;
 }
 
 a {
@@ -7,12 +8,20 @@ a {
 }
 
 div#header {
-  font-size:14pt;
+  height: 250px;
+  font-size:18pt;
   text-align: center;
+  color: #ffffff;
 }
 
 div#footer {
   text-align: center;
+  color: #ffffff;
+  font-size: 16pt;
+}
+
+div#footer a {
+  color: #ffffff;
 }
 
 div#index-content {
@@ -20,21 +29,28 @@ div#index-content {
   height: 250px;
   margin-left: 250px;
   margin-right: 250px;
+  font-size: 16pt;
+}
+ div#index-content a {
+  color: #ffffff;
 }
 
 div#transcribe-content {
   text-align: center;
-  height: 350px;
-  margin-left: 350px;
-  margin-right: 350px; 
+  height: 250px;
+  border: solid 0.5px;
+  border-radius: 10px 10px;
+  margin-left: 465px;
+  margin-right: 465px;
+  background-color: #BFBFBF;
 }
 
 p.error {
   background-color: #FFB6C1;
   border: solid 1px;
   border-color: #FF0000;
-  border-radius: 10px 5px;
+  border-radius: 10px;
   text-align: center;
   font-size: 11pt;
-  font-family: "Monaco";
+  font-family: "Monaco", "Lucida Sans", sans-serif;
 }
