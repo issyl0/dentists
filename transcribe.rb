@@ -83,6 +83,7 @@ puts "
 		<script type='text/javascript' src='main.js'></script>
   	</head>
   	<body>
+  		<div id='header'></div>
 		<div id='transcribe-content'>"
 
 if cgi['formtype'] == "" then
